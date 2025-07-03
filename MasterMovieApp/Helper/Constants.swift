@@ -1,5 +1,5 @@
 //
-//  Storyboard.swift
+//  Constants.swift
 //  MasterMovieApp
 //
 //  Created by MacBook Pro on 01/07/2025.
@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
-struct Storyboard {
+struct Constants {
 
-    static var main = UIStoryboard(name: "Main", bundle: Bundle.main)
+    static let apiBaseURL: String = "https://api.themoviedb.org/3/"
     
 }
+
