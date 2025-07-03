@@ -10,9 +10,22 @@
 		521BCCE72E140BDF008D3963 /* MasterMovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterMovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		52026E842E151CF40024AD46 /* Exceptions for "MasterMovieApp" folder in "MasterMovieApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Application/Info.plist,
+			);
+			target = 521BCCE62E140BDF008D3963 /* MasterMovieApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		521BCCE92E140BDF008D3963 /* MasterMovieApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				52026E842E151CF40024AD46 /* Exceptions for "MasterMovieApp" folder in "MasterMovieApp" target */,
+			);
 			path = MasterMovieApp;
 			sourceTree = "<group>";
 		};
@@ -134,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VN9XH7F2WV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MasterMovieApp/Info.plist;
+				INFOPLIST_FILE = MasterMovieApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -166,7 +179,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VN9XH7F2WV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MasterMovieApp/Info.plist;
+				INFOPLIST_FILE = MasterMovieApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

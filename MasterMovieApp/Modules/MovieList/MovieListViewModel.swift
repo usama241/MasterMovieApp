@@ -1,16 +1,8 @@
-//
-//  MovieListViewModel.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 01/07/2025.
-//
-
 import Foundation
 
 class MovieListViewModel {
     let service: MovieServices!
-    @Published var moviesList: [MoviesListResults]?
-    @Published var progressing: Bool = false
+    @Published var moviesList: [Movie]?
  
     //MARK: - Init
     init(service: MovieServices) {
@@ -20,17 +12,9 @@ class MovieListViewModel {
 
 extension MovieListViewModel {
     
-    func moviesList() async throws -> MoviesListResponse {
-        do{
-            progressing = true
+    func moviesList() async throws {
             let response  = try await service.moviesList()
-            self.moviesList = response.results
-            progressing = false
-            return response
-        } catch {
-            progressing = false
-            throw error
-        }
+            self.moviesList = response
     }
 }
 

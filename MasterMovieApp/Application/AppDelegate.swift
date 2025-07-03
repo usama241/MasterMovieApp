@@ -1,19 +1,9 @@
-//
-//  AppDelegate.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 01/07/2025.
-//
-
 import UIKit
 import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-    var viewControllerFactory: ViewControllerFactoryProtocol?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true

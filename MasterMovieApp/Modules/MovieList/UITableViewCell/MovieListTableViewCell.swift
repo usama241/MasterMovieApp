@@ -1,10 +1,3 @@
-//
-//  MovieListTableViewCell.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 02/07/2025.
-//
-
 import UIKit
 
 class MovieListTableViewCell: UITableViewCell {
@@ -39,18 +32,18 @@ class MovieListTableViewCell: UITableViewCell {
     }
 
     // MARK: - Configure Cell
-    func configure(with movie: MoviesListResults) {
+    func configure(movie: Movie) {
         movieTitleLabel.text = movie.title ?? "N/A"
-        releaseDateLabel.text = "Release: \(movie.release_date ?? "N/A")"
+        releaseDateLabel.text = "Release: \(movie.releaseDate ?? "N/A")"
         
-        popularityLabel.text = "Popularity: \(movie.popularity ?? 0)"
-        voteAverageLabel.text = "Avg Vote: \(movie.vote_average ?? 0)"
-        voteCountLabel.text = "Votes: \(movie.vote_count ?? 0)"
+        popularityLabel.text = "Popularity: \(movie.rating ?? 0)"
+        voteAverageLabel.text = "Avg Vote: \(movie.voteAverage ?? 0)"
+        voteCountLabel.text = "Votes: \(movie.voteCount ?? 0)"
         adultLabel.text = movie.adult == true ? "18+" : "All Ages"
         adultView.backgroundColor = movie.adult == true ? UIColor.red : UIColor.systemPurple
-        languageLabel.text = "Language: \(movie.original_language ?? "N/A")"
+        languageLabel.text = "Language: \(movie.language ?? "N/A")"
 
-        if let path = movie.poster_path {
+        if let path = movie.posterURL {
             let fullURL = URL(string: "https://image.tmdb.org/t/p/w500\(path)")
             if let url = fullURL {
                 DispatchQueue.global().async {

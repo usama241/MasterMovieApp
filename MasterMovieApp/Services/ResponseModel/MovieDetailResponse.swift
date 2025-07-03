@@ -1,13 +1,6 @@
-//
-//  MovieDetailResponse.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 02/07/2025.
-//
-
 import Foundation
 
-struct MovieDetailResponse : Codable {
+struct MovieDetailResponse: Codable {
     let adult : Bool?
     let backdrop_path : String?
     let belongs_to_collection : Belongs_to_collection?

@@ -1,21 +1,11 @@
-//
-//  MovieDetailsViewModel.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 01/07/2025.
-//
-
 import Foundation
 
 class MovieDetailsViewModel {
-    
-    //MARK: - Properties
-    let service: MovieServices
-    @Published var movieDetail: MovieDetailResponse?
-    let selectedMovieId: Int
+    private let service: MovieServices
+    private let selectedMovieId: Int
 
-    //MARK: - Published
-    @Published var progressing: Bool = false
+    var movieDetails: Movie?
+    @Published var movieFetched: Bool = false
  
     //MARK: - Init
     init(service: MovieServices, selectedMovieId: Int) {
@@ -27,15 +17,9 @@ class MovieDetailsViewModel {
 extension MovieDetailsViewModel {
     
     func fetchMovieDetail() async throws {
-        do{
-            progressing = true
-            let response  = try await service.movieDetail(selectedMovieId: selectedMovieId)
-            self.movieDetail = response
-            progressing = false
-        } catch {
-            progressing = false
-            throw error
-        }
+        let response  = try await service.movieDetail(selectedMovieId: selectedMovieId)
+        self.movieDetails = response
+        movieFetched = true
     }
 }
 

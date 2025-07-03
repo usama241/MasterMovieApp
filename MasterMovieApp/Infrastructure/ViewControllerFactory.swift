@@ -1,18 +1,11 @@
-//
-//  ViewControllerFactory.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 01/07/2025.//
-
 import Foundation
 import UIKit
 
 protocol ViewControllerFactoryProtocol {
     
     init(apiClient: APIClientProtocol)
-    
-    func movieDetailsViewController(navigationController: UINavigationController, selectedMovieId: Int) -> MovieDetailsViewController
     func movieListViewController(navigationController: UINavigationController) -> MovieListViewController
+    func movieDetailsViewController(navigationController: UINavigationController, selectedMovieId: Int) -> MovieDetailsViewController
 }
 
 class ViewControllerFactory: ViewControllerFactoryProtocol {
@@ -34,7 +27,7 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
         let viewController = Storyboard.main.instantiateViewController(identifier: MovieDetailsViewController.storyboardIdentifier) as! MovieDetailsViewController
         let movieServices = MovieServices(apiClient: apiClient)
         viewController.viewModel = MovieDetailsViewModel(service: movieServices, selectedMovieId: selectedMovieId)
-        viewController.coordinator = MovieDetailsCoordinator(navigationController: navigationController, viewControllerFactory: self)
+        viewController.coordinator = MovieDetailsCoordinator(navigationController: navigationController)
         viewController.title = "Movie Detail"
         return viewController
     }    

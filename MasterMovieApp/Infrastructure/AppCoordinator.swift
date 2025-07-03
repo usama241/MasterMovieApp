@@ -1,17 +1,10 @@
-//
-//  AppCoordinator.swift
-//  JSZindigi
-//
-//  Created by Anis Ur Rehman on 14/06/2023.
-//
-
 import Foundation
 import UIKit
 
 class AppCoordinator {
     let window: UIWindow
     let viewControllerFactory: ViewControllerFactoryProtocol
-    var navigationController: UINavigationController!
+    private var navigationController: UINavigationController!
 
     
     init(window: UIWindow, viewControllerFactory: ViewControllerFactoryProtocol) {
@@ -32,5 +25,4 @@ extension AppCoordinator {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
-    
 }

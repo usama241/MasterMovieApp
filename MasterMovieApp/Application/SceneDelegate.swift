@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 01/07/2025.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -13,15 +6,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var appCoordinator: AppCoordinator?
     
     private lazy var defaultURLSession: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 90 // seconds
-        configuration.timeoutIntervalForResource = 90 // seconds
-        return URLSession(configuration: configuration, delegate: urlSessionDelegate, delegateQueue: nil)
+        return URLSession(configuration: .default, delegate: nil, delegateQueue: nil)
     }()
-    private var urlSessionDelegate: URLSessionDelegate? {
-        return nil
-    }
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -66,16 +52,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate {
     
     func startApp() {
-        // Setup dependancies for factory. That will be used throughout the app
+        guard let window else { return }
         let apiClient: APIClientProtocol = APIClient(urlSession: defaultURLSession)
-        
         let factory = ViewControllerFactory(apiClient: apiClient)
-        self.appCoordinator?.start()
-       
-        UIApplication.currentAppDelegate?.viewControllerFactory = factory
-        
-        // Start App
-        appCoordinator = AppCoordinator(window: window!, viewControllerFactory: factory)
+        appCoordinator = AppCoordinator(window: window, viewControllerFactory: factory)
         appCoordinator?.start()
     }
 }

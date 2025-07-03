@@ -1,10 +1,3 @@
-//
-//  MovieListViewController.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 01/07/2025.
-//
-
 import Foundation
 import UIKit
 import Combine
@@ -30,7 +23,7 @@ class MovieListViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Movies List"
         setupTableView()
-        self.moviesList()
+        self.fetchMoviesList()
         self.bindViews()
     }
     
@@ -45,23 +38,23 @@ class MovieListViewController: UIViewController {
         viewModel.$moviesList
             .receive(on: RunLoop.main)
             .sink { [weak self] movies in
-                self?.tableView.reloadData()
-                if let movies = movies {
+                if let movies {
                     self?.noHistoryLabel.isHidden = !(movies.isEmpty)
                     self?.tableView.isHidden = (movies.isEmpty)
+                    self?.tableView.reloadData()
                 }
             }
             .store(in: &subscribers)
     }
 
-    private func moviesList() {
+    private func fetchMoviesList() {
         Task { [weak self] in
             guard let self = self else { return }
             do {
                 try await self.viewModel.moviesList()
             } catch {
                 await MainActor.run {
-                    let alert = UIAlertController(title: "Warning", message: error.localizedDescription, preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                     self.noHistoryLabel.isHidden = false
@@ -84,7 +77,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         else {
             return UITableViewCell()
         }
-        cell.configure(with: movie)
+        cell.configure(movie: movie)
         return cell
     }
 

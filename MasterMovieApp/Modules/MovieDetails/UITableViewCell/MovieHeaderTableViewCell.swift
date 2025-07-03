@@ -1,10 +1,3 @@
-//
-//  MovieHeaderTableViewCell.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 02/07/2025.
-//
-
 import UIKit
 
 class MovieHeaderTableViewCell: UITableViewCell {
@@ -45,19 +38,19 @@ class MovieHeaderTableViewCell: UITableViewCell {
         movieImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
-    func configureCell(_ model: MovieHeaderViewModel) {
-        movieTitleLabel.text = model.title
-        tagLineLabel.text = model.tagLine
-        timeLabel.text = "\(model.runtime ?? "N/A") minutes"
-        ratingLabel.text = "\(model.rating ?? "N/A") rating"
-        releaseDataLabel.text = model.releaseDate
-        languageLabel.text = model.language
-        overViewLabel.text = model.overview
-        genres = model.genres ?? []
-        productionCompanies = model.productionCompanies ?? []
+    func configureCell(movie: Movie) {
+        movieTitleLabel.text = movie.title
+        tagLineLabel.text = movie.tagLine
+        timeLabel.text = "\(movie.runtime ?? 0) minutes"
+        ratingLabel.text = "\(movie.rating ?? 0) rating"
+        releaseDataLabel.text = movie.releaseDate
+        languageLabel.text = movie.language
+        overViewLabel.text = movie.overview
+        genres = movie.genres ?? []
+        productionCompanies = movie.productionCompanies ?? []
         genreCollectionView.reloadData()
         productionCompaniesCollectionView.reloadData()
-        if let path = model.posterURL {
+        if let path = movie.posterURL {
             let fullURL = URL(string: "https://image.tmdb.org/t/p/w500\(path)")
             if let url = fullURL {
                 DispatchQueue.global().async {
@@ -137,17 +130,4 @@ extension MovieHeaderTableViewCell: UICollectionViewDataSource, UICollectionView
         }
         return CGSize(width: 120, height: 100)
     }
-}
-
-struct MovieHeaderViewModel {
-    let posterURL: String?
-    let title: String?
-    let tagLine: String?
-    let runtime: String?
-    let rating: String?
-    let releaseDate: String?
-    let language: String?
-    let overview: String?
-    let genres: [Genres]?
-    let productionCompanies: [Production_companies]?
 }

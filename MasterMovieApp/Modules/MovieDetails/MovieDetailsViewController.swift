@@ -1,10 +1,3 @@
-//
-//  MovieDetailsViewController.swift
-//  MasterMovieApp
-//
-//  Created by MacBook Pro on 01/07/2025.
-//
-
 import Foundation
 import UIKit
 import Combine
@@ -23,7 +16,7 @@ class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        self.movieDetail()
+        self.getMovieDetails()
         self.bindViews()
     }
     
@@ -33,25 +26,26 @@ class MovieDetailsViewController: UIViewController {
         tableView.register(UINib(nibName: "MovieHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieHeaderTableViewCell")
     }
     
-    func bindViews() {
-        viewModel.$movieDetail
+    private func bindViews() {
+        viewModel.$movieFetched
             .receive(on: RunLoop.main)
-            .sink { [weak self] movies in
-                self?.tableView.reloadData()
+            .sink { [weak self] fetched in
+                if fetched {
+                    self?.tableView.reloadData()
+                }
             }
             .store(in: &subscribers)
     }
 
-    private func movieDetail() {
+    private func getMovieDetails() {
         Task { [weak self] in
-            guard let self = self else { return }
             do {
-                try await self.viewModel.fetchMovieDetail()
+                try await self?.viewModel.fetchMovieDetail()
             } catch {
                 await MainActor.run {
-                    let alert = UIAlertController(title: "Warning", message: error.localizedDescription, preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    self?.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -67,11 +61,11 @@ extension MovieDetailsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieHeaderTableViewCell", for: indexPath) as? MovieHeaderTableViewCell,
-                  let movie = viewModel.movieDetail
+                  let movie = viewModel.movieDetails
             else {
                 return UITableViewCell()
             }
-            cell.configureCell(MovieHeaderViewModel(posterURL: movie.poster_path, title: movie.title, tagLine: movie.tagline, runtime: "\(movie.runtime ?? 0)", rating: "\(movie.popularity ?? 0)", releaseDate: movie.release_date, language: movie.original_language, overview: movie.overview, genres: movie.genres, productionCompanies: movie.production_companies))
+            cell.configureCell(movie: movie)
             return cell
         }
         return UITableViewCell()
